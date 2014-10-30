@@ -1,0 +1,16 @@
+@model  DateTime?
+@{
+    var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
+}
+<div class='input-group date' id='@(name)_datetimepicker'>
+   @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control" })
+    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+    </span>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#@(name)_datetimepicker').datetimepicker({
+            language: 'zh-CN'
+        });
+    })
+</script>

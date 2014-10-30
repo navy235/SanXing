@@ -1,0 +1,82 @@
+﻿.display-container {
+    overflow: hidden;
+}
+
+    .display-container.bordered {
+        border: 1px solid #ccc;
+    }
+
+.display-item {
+    line-height: 24px;
+    position: relative;
+    overflow: hidden;
+    font-size: 12px;
+}
+
+
+.display-label {
+    display: block;
+    vertical-align: middle;
+    width: 105px;
+    text-align: right;
+    float: left;
+}
+
+.display-field {
+    vertical-align: middle;
+}
+
+.display-item-textarea .display-field {
+    width: 650px;
+}
+
+.display-item-uploadlogo .display-field .img-box img {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #dddddd;
+}
+
+.display-title {
+    color: #333;
+    border-bottom: 1px solid #dfdfdf;
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 4px;
+    padding: 5px 10px;
+    background: #E0ECFF;
+}
+
+
+.display-item-hide .display-label {
+    display: none;
+}
+
+.display-label:after {
+    content: ":";
+    margin: 0px 5px;
+}
+
+.display-item .img-box-list {
+    margin-left: 0px;
+}
+
+.display-item .map-container {
+    width: 450px;
+    height: 350px;
+}
+
+
+.display-container.col2 .display-item {
+    width: 48%;
+    float: left;
+}
+
+.display-container.col3 .display-item {
+    width: 30%;
+    float: left;
+}
+
+.display-container.col4 .display-item {
+    width: 24%;
+    float: left;
+}

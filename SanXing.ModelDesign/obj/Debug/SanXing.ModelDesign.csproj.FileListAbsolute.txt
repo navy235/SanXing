@@ -1,0 +1,9 @@
+D:\GitProject\SanXing\SanXing.ModelDesign\bin\Debug\SanXing.ModelDesign.dll.config
+D:\GitProject\SanXing\SanXing.ModelDesign\bin\Debug\SanXing.ModelDesign.dll
+D:\GitProject\SanXing\SanXing.ModelDesign\bin\Debug\SanXing.ModelDesign.pdb
+D:\GitProject\SanXing\SanXing.ModelDesign\bin\Debug\EntityFramework.dll
+D:\GitProject\SanXing\SanXing.ModelDesign\bin\Debug\EntityFramework.xml
+D:\GitProject\SanXing\SanXing.ModelDesign\bin\Debug\zh-Hans\EntityFramework.resources.dll
+D:\GitProject\SanXing\SanXing.ModelDesign\obj\Debug\SanXing.ModelDesign.csprojResolveAssemblyReference.cache
+D:\GitProject\SanXing\SanXing.ModelDesign\obj\Debug\SanXing.ModelDesign.dll
+D:\GitProject\SanXing\SanXing.ModelDesign\obj\Debug\SanXing.ModelDesign.pdb

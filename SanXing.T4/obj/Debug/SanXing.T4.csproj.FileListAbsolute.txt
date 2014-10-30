@@ -1,0 +1,4 @@
+D:\GitProject\SanXing\SanXing.T4\bin\Debug\SanXing.T4.dll
+D:\GitProject\SanXing\SanXing.T4\bin\Debug\SanXing.T4.pdb
+D:\GitProject\SanXing\SanXing.T4\obj\Debug\SanXing.T4.dll
+D:\GitProject\SanXing\SanXing.T4\obj\Debug\SanXing.T4.pdb

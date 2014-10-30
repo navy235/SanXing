@@ -1,0 +1,14 @@
+﻿@{
+    var serviceResult = (ServiceResult)TempData["Service_Result"] ?? null;
+}
+
+@if (serviceResult != null)
+{
+    <div class="alert  action-info fadeOut animated   @(serviceResult.Success ? "alert-success" : "alert-warning")" >
+        <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+        <p class="action-text">
+            <i class="glyphicon glyphicon-@(serviceResult.Success ? "ok-sign" : "exclamation-sign")"></i>
+            @serviceResult.Message
+        </p>
+    </div>
+}

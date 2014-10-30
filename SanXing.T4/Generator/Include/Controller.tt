@@ -1,0 +1,222 @@
+﻿
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class Controller : MtTemplate
+    {
+
+
+        public Controller(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return string.Format("{0}Controller.cs", _model.Name);
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\Controllers";
+            }
+        }
+
+        public void RenderPropertry(){
+            WriteLine(" ");
+            foreach(var prop in _model.Properties){
+                WriteLine(string.Format("            model.{0}=entity.{0};",prop.Name));
+            }
+        }
+
+
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using Mt.Core;
+using SanXing.Data;
+using SanXing.Data.Models;
+using SanXing.Data.Service;
+using SanXing.Web.Framework.Mvc;
+
+namespace SanXing.Web.Controllers
+{
+	public class <#=            _model.Name #>Controller : Controller
+    {
+
+        private readonly I<#=            _model.Name #>Service _<#=            _model.Name #>Service;
+
+        public <#=            _model.Name #>Controller(I<#=            _model.Name #>Service <#=            _model.Name #>Service)
+        {
+            this._<#=            _model.Name #>Service = <#=            _model.Name #>Service;
+        }
+
+        [NonAction]
+        protected void PrepareListModel(<#=            _model.Name #>ListItemModel model, <#=            _model.Name #> entity)
+        {
+            model.ID = entity.ID;
+            model.Name = entity.Name;
+            model.Deleted = entity.Deleted;
+        }
+
+        public ActionResult Index()
+        {
+            return RedirectToAction("List");
+        }
+
+        public ActionResult List()
+        {
+            var model = new <#=            _model.Name #>SearchModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult List(<#=            _model.Name #>SearchModel model)
+        {
+            var query = _<#=            _model.Name #>Service.GetAll();
+
+            if (!string.IsNullOrEmpty(model.Name))
+            {
+                query = query.Where(x => x.Name.Contains(model.Name));
+            }
+            var data = query.OrderBy(x => x.ID).Paging<<#=            _model.Name #>>(model.page - 1, model.rows);
+
+            var gridModel = new
+            {
+                rows = data.Select(x =>
+                {
+                    var m = new <#=            _model.Name #>ListItemModel();
+                    PrepareListModel(m, x);
+                    return m;
+                }),
+                total = data.TotalCount
+            };
+
+
+            return Json(gridModel);
+        }
+
+        public ActionResult Create()
+        {
+            var model = new <#=            _model.Name #>Model();
+            return PartialView(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(<#=            _model.Name #>Model model)
+        {
+            ServiceResult result = new ServiceResult();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var entity = model.ToEntity();
+                    _<#=            _model.Name #>Service.Insert(entity);
+                    result.Message = "添加<#=            _model.Description #>成功！";
+                }
+                catch (Exception ex)
+                {
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
+                }
+            }
+            else
+            {
+                result.Message = "请检查表单是否填写完整！";
+                result.AddServiceError("请检查表单是否填写完整！");
+            }
+            return Json(result);
+        }
+
+        public ActionResult Edit(int ID)
+        {
+            var entity = _<#=            _model.Name #>Service.Single(ID);
+
+            var model = entity.ToModel();
+
+            return PartialView(model);
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(<#=            _model.Name #>Model model)
+        {
+            ServiceResult result = new ServiceResult();
+            var entity = _<#=            _model.Name #>Service.Single(model.ID);
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    entity = model.ToEntity(entity);
+                    _<#=            _model.Name #>Service.Update(entity);
+                    result.Message = "编辑<#=            _model.Description #>成功！";
+
+                }
+                catch (Exception ex)
+                {
+                    result.Message = Utilities.GetInnerMostException(ex);
+                    result.AddServiceError(result.Message);
+
+                }
+            }
+            else
+            {
+                result.Message = "请检查表单是否填写完整！";
+                result.AddServiceError("请检查表单是否填写完整！");
+
+            }
+            return Json(result);
+        }
+
+        public ActionResult Delete(int ID)
+        {
+            ServiceResult result = new ServiceResult();
+            var entity = _<#=            _model.Name #>Service.Single(ID);
+            try
+            {
+                _<#=            _model.Name #>Service.Delete(entity);
+                result.Message = "删除<#=            _model.Description #>成功！";
+
+            }
+            catch (Exception ex)
+            {
+                result.Message = Utilities.GetInnerMostException(ex);
+                result.AddServiceError(result.Message);
+
+            }
+            return Json(result);
+        }
+
+    }
+}
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

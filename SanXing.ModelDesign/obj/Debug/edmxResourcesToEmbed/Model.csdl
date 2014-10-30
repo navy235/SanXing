@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="ModelContainer" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="User集" EntityType="Model.User" />
+    <EntitySet Name="Cost集" EntityType="Model.Cost" />
+    <EntitySet Name="Plan集" EntityType="Model.Plan" />
+    <EntitySet Name="Contact集" EntityType="Model.Contact" />
+    <EntitySet Name="RichType集" EntityType="Model.RichType" />
+    <EntitySet Name="CostType集" EntityType="Model.CostType" />
+    <AssociationSet Name="ContactRichType" Association="Model.ContactRichType">
+      <End Role="Contact" EntitySet="Contact集" />
+      <End Role="RichType" EntitySet="RichType集" />
+    </AssociationSet>
+    <AssociationSet Name="CostCostType" Association="Model.CostCostType">
+      <End Role="Cost" EntitySet="Cost集" />
+      <End Role="CostType" EntitySet="CostType集" />
+    </AssociationSet>
+    <EntitySet Name="ContactRecord集" EntityType="Model.ContactRecord" />
+    <EntitySet Name="ContactWay集" EntityType="Model.ContactWay" />
+    <AssociationSet Name="ContactRecordContactWay" Association="Model.ContactRecordContactWay">
+      <End Role="ContactRecord" EntitySet="ContactRecord集" />
+      <End Role="ContactWay" EntitySet="ContactWay集" />
+    </AssociationSet>
+    <EntitySet Name="ContactType集" EntityType="Model.ContactType" />
+    <AssociationSet Name="ContactContactType" Association="Model.ContactContactType">
+      <End Role="Contact" EntitySet="Contact集" />
+      <End Role="ContactType" EntitySet="ContactType集" />
+    </AssociationSet>
+    <EntitySet Name="Blog集" EntityType="Model.Blog" />
+    <EntitySet Name="BlogType集" EntityType="Model.BlogType" />
+    <AssociationSet Name="SublimeTypeReadSublime" Association="Model.SublimeTypeReadSublime">
+      <End Role="SublimeType" EntitySet="BlogType集" />
+      <End Role="ReadSublime" EntitySet="Blog集" />
+    </AssociationSet>
+    <AssociationSet Name="ReadSublimeUser" Association="Model.ReadSublimeUser">
+      <End Role="ReadSublime" EntitySet="Blog集" />
+      <End Role="User" EntitySet="User集" />
+    </AssociationSet>
+    <AssociationSet Name="ContactUser" Association="Model.ContactUser">
+      <End Role="Contact" EntitySet="Contact集" />
+      <End Role="User" EntitySet="User集" />
+    </AssociationSet>
+    <AssociationSet Name="CostUser" Association="Model.CostUser">
+      <End Role="Cost" EntitySet="Cost集" />
+      <End Role="User" EntitySet="User集" />
+    </AssociationSet>
+    <AssociationSet Name="UserContactRecord" Association="Model.UserContactRecord">
+      <End Role="User" EntitySet="User集" />
+      <End Role="ContactRecord" EntitySet="ContactRecord集" />
+    </AssociationSet>
+    <AssociationSet Name="ContactContactRecord" Association="Model.ContactContactRecord">
+      <End Role="Contact" EntitySet="Contact集" />
+      <End Role="ContactRecord" EntitySet="ContactRecord集" />
+    </AssociationSet>
+    <AssociationSet Name="UserSublimeType" Association="Model.UserSublimeType">
+      <End Role="User" EntitySet="User集" />
+      <End Role="SublimeType" EntitySet="BlogType集" />
+    </AssociationSet>
+    <EntitySet Name="TimeCost集" EntityType="Model.TimeCost" />
+    <EntitySet Name="TimeCostType集" EntityType="Model.TimeCostType" />
+    <AssociationSet Name="TimeCostTimeCostType" Association="Model.TimeCostTimeCostType">
+      <End Role="TimeCost" EntitySet="TimeCost集" />
+      <End Role="TimeCostType" EntitySet="TimeCostType集" />
+    </AssociationSet>
+    <AssociationSet Name="TimeCostUser" Association="Model.TimeCostUser">
+      <End Role="TimeCost" EntitySet="TimeCost集" />
+      <End Role="User" EntitySet="User集" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="UserName" Nullable="false" />
+    <Property Type="String" Name="Email" Nullable="false" />
+    <Property Type="String" Name="Password" Nullable="false" />
+    <Property Type="String" Name="CreateTime" Nullable="false" />
+    <Property Type="String" Name="LastTime" Nullable="false" />
+    <Property Type="String" Name="Phone" Nullable="false" />
+    <Property Type="String" Name="Mobile" Nullable="false" />
+    <Property Type="String" Name="ActiveStatus" Nullable="false" />
+    <NavigationProperty Name="ReadSublime" Relationship="Model.ReadSublimeUser" FromRole="User" ToRole="ReadSublime" />
+    <NavigationProperty Name="Contact" Relationship="Model.ContactUser" FromRole="User" ToRole="Contact" />
+    <NavigationProperty Name="Cost" Relationship="Model.CostUser" FromRole="User" ToRole="Cost" />
+    <NavigationProperty Name="ContactRecord" Relationship="Model.UserContactRecord" FromRole="User" ToRole="ContactRecord" />
+    <NavigationProperty Name="SublimeType" Relationship="Model.UserSublimeType" FromRole="User" ToRole="SublimeType" />
+    <NavigationProperty Name="TimeCost" Relationship="Model.TimeCostUser" FromRole="User" ToRole="TimeCost" />
+  </EntityType>
+  <EntityType Name="Cost">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Money" Nullable="false" />
+    <Property Type="String" Name="CreateTime" Nullable="false" />
+    <Property Type="String" Name="LastTime" Nullable="false" />
+    <Property Type="String" Name="CostTypeID" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <NavigationProperty Name="CostType" Relationship="Model.CostCostType" FromRole="Cost" ToRole="CostType" />
+    <NavigationProperty Name="User" Relationship="Model.CostUser" FromRole="Cost" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Plan">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="StartTime" Nullable="false" />
+    <Property Type="String" Name="EndTime" Nullable="false" />
+    <Property Type="String" Name="CreateTime" Nullable="false" />
+    <Property Type="String" Name="LastTime" Nullable="false" />
+    <Property Type="String" Name="ContactID" Nullable="false" />
+    <Property Type="String" Name="ContactCount" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Contact">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Sex" Nullable="false" />
+    <Property Type="String" Name="Age" Nullable="false" />
+    <Property Type="String" Name="Avtar" Nullable="false" />
+    <Property Type="String" Name="Advantages" Nullable="false" />
+    <Property Type="String" Name="Weakness" Nullable="false" />
+    <Property Type="String" Name="Mettle" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <NavigationProperty Name="RichType" Relationship="Model.ContactRichType" FromRole="Contact" ToRole="RichType" />
+    <Property Type="Int32" Name="RichTypeID" Nullable="false" />
+    <Property Type="String" Name="ContactScore" Nullable="false" />
+    <NavigationProperty Name="ContactType" Relationship="Model.ContactContactType" FromRole="Contact" ToRole="ContactType" />
+    <Property Type="Int32" Name="ContactTypeID" Nullable="false" />
+    <Property Type="String" Name="Pinyin" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Model.ContactUser" FromRole="Contact" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <NavigationProperty Name="ContactRecord" Relationship="Model.ContactContactRecord" FromRole="Contact" ToRole="ContactRecord" />
+  </EntityType>
+  <EntityType Name="RichType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CateName" Nullable="false" />
+    <Property Type="String" Name="PID" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="false" />
+    <Property Type="String" Name="Level" Nullable="false" />
+    <NavigationProperty Name="Contact" Relationship="Model.ContactRichType" FromRole="RichType" ToRole="Contact" />
+  </EntityType>
+  <EntityType Name="CostType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CateName" Nullable="false" />
+    <Property Type="String" Name="PID" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="false" />
+    <Property Type="String" Name="Level" Nullable="false" />
+    <NavigationProperty Name="Cost" Relationship="Model.CostCostType" FromRole="CostType" ToRole="Cost" />
+  </EntityType>
+  <Association Name="ContactRichType">
+    <End Type="Model.Contact" Role="Contact" Multiplicity="*" />
+    <End Type="Model.RichType" Role="RichType" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="RichType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Contact">
+        <PropertyRef Name="RichTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CostCostType">
+    <End Type="Model.Cost" Role="Cost" Multiplicity="*" />
+    <End Type="Model.CostType" Role="CostType" Multiplicity="1" />
+  </Association>
+  <EntityType Name="ContactRecord">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="ContactID" Nullable="false" />
+    <NavigationProperty Name="ContactWay" Relationship="Model.ContactRecordContactWay" FromRole="ContactRecord" ToRole="ContactWay" />
+    <Property Type="Int32" Name="ContactWayID" Nullable="false" />
+    <Property Type="String" Name="Problem" Nullable="false" />
+    <Property Type="String" Name="Description" Nullable="false" />
+    <Property Name="Sentiment" Nullable="false" Type="String" />
+    <Property Type="String" Name="Score" Nullable="false" />
+    <Property Type="String" Name="CreateTime" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Model.UserContactRecord" FromRole="ContactRecord" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <NavigationProperty Name="Contact" Relationship="Model.ContactContactRecord" FromRole="ContactRecord" ToRole="Contact" />
+    <Property Type="Int32" Name="ContactID1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ContactWay">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CateName" Nullable="false" />
+    <Property Type="String" Name="PID" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="false" />
+    <Property Type="String" Name="Level" Nullable="false" />
+    <NavigationProperty Name="ContactRecord" Relationship="Model.ContactRecordContactWay" FromRole="ContactWay" ToRole="ContactRecord" />
+    <Property Type="String" Name="Score" Nullable="false" />
+  </EntityType>
+  <Association Name="ContactRecordContactWay">
+    <End Type="Model.ContactRecord" Role="ContactRecord" Multiplicity="*" />
+    <End Type="Model.ContactWay" Role="ContactWay" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ContactWay">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContactRecord">
+        <PropertyRef Name="ContactWayID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ContactType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CateName" Nullable="false" />
+    <Property Type="String" Name="PID" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="false" />
+    <Property Type="String" Name="Level" Nullable="false" />
+    <NavigationProperty Name="Contact" Relationship="Model.ContactContactType" FromRole="ContactType" ToRole="Contact" />
+  </EntityType>
+  <Association Name="ContactContactType">
+    <End Type="Model.Contact" Role="Contact" Multiplicity="*" />
+    <End Type="Model.ContactType" Role="ContactType" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ContactType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Contact">
+        <PropertyRef Name="ContactTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Blog">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" />
+    <Property Type="String" Name="Content" Nullable="false" />
+    <Property Type="String" Name="Sentiment" Nullable="false" />
+    <Property Type="String" Name="CreateTime" Nullable="false" />
+    <Property Type="String" Name="LastTime" Nullable="false" />
+    <NavigationProperty Name="SublimeType" Relationship="Model.SublimeTypeReadSublime" FromRole="ReadSublime" ToRole="SublimeType" />
+    <Property Type="Int32" Name="SublimeTypeID" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Model.ReadSublimeUser" FromRole="ReadSublime" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="Url" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BlogType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CateName" Nullable="false" />
+    <Property Type="String" Name="PID" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="false" />
+    <Property Type="String" Name="Level" Nullable="false" />
+    <NavigationProperty Name="ReadSublime" Relationship="Model.SublimeTypeReadSublime" FromRole="SublimeType" ToRole="ReadSublime" />
+    <NavigationProperty Name="User" Relationship="Model.UserSublimeType" FromRole="SublimeType" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+  </EntityType>
+  <Association Name="SublimeTypeReadSublime">
+    <End Type="Model.BlogType" Role="SublimeType" Multiplicity="1" />
+    <End Type="Model.Blog" Role="ReadSublime" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SublimeType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReadSublime">
+        <PropertyRef Name="SublimeTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReadSublimeUser">
+    <End Type="Model.Blog" Role="ReadSublime" Multiplicity="*" />
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ReadSublime">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ContactUser">
+    <End Type="Model.Contact" Role="Contact" Multiplicity="*" />
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Contact">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CostUser">
+    <End Type="Model.Cost" Role="Cost" Multiplicity="*" />
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Cost">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserContactRecord">
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <End Type="Model.ContactRecord" Role="ContactRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContactRecord">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ContactContactRecord">
+    <End Type="Model.Contact" Role="Contact" Multiplicity="1" />
+    <End Type="Model.ContactRecord" Role="ContactRecord" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contact">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="ContactRecord">
+        <PropertyRef Name="ContactID1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UserSublimeType">
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <End Type="Model.BlogType" Role="SublimeType" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="SublimeType">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="TimeCost">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Hour" Nullable="false" />
+    <NavigationProperty Name="TimeCostType" Relationship="Model.TimeCostTimeCostType" FromRole="TimeCost" ToRole="TimeCostType" />
+    <Property Type="Int32" Name="TimeCostTypeID" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Model.TimeCostUser" FromRole="TimeCost" ToRole="User" />
+    <Property Type="Int32" Name="UserID" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TimeCostType">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="CateName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="PID" Nullable="false" />
+    <Property Type="Int32" Name="Code" Nullable="false" />
+    <Property Type="String" Name="Level" Nullable="false" />
+    <NavigationProperty Name="TimeCost" Relationship="Model.TimeCostTimeCostType" FromRole="TimeCostType" ToRole="TimeCost" />
+  </EntityType>
+  <Association Name="TimeCostTimeCostType">
+    <End Type="Model.TimeCost" Role="TimeCost" Multiplicity="*" />
+    <End Type="Model.TimeCostType" Role="TimeCostType" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="TimeCostType">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeCost">
+        <PropertyRef Name="TimeCostTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TimeCostUser">
+    <End Type="Model.TimeCost" Role="TimeCost" Multiplicity="*" />
+    <End Type="Model.User" Role="User" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="TimeCost">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

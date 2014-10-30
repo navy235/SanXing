@@ -1,0 +1,29 @@
+@model  string
+
+@{
+    string name = ViewData.TemplateInfo.GetFullHtmlFieldId(null);
+    List<SelectListItem> renderList = new List<SelectListItem>();
+    renderList = (List<SelectListItem>)ViewData["Data_" + name];
+   
+}
+<div class="k-checklist k-form-checklist clearfix">
+
+    <span class="k-checklist-tool">
+        <a href="javascript:void(0);" class="k-checklist-all">全选</a>
+        <a href="javascript:void(0);" class="k-checklist-cancel">取消</a>
+    </span>
+    @for (int i = 0; i < renderList.Count; i++)
+    { 
+        <span class="k-checklist-item">
+            <input type="checkbox" id="@(name + i.ToString())" name="@(name + "_check")" value="@renderList[i].Value" checked="@renderList[i].Selected" />
+            <label for="@(name + i.ToString())" class="checkbox" >@renderList[i].Text</label>
+        </span>
+    }
+</div>
+@Html.TextBoxFor(m => m, new { tabindex = -1, @class = "field-valid-text" })
+
+<script type="text/javascript">
+    $(function () {
+        $('#@name').checkList({});
+    })
+</script>

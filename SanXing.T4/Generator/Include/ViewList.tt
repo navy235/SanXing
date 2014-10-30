@@ -1,0 +1,156 @@
+﻿
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class ViewList: MtTemplate
+    {
+
+        public ViewList(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return "List.cshtml";
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return string.Format(@"\Views\{0}", _model.Name );
+            }
+        }
+
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+@{
+    ViewBag.Title = "<#=            _model.Name #>";
+}
+
+<table id="<#=            _model.Name #>_dg" title="<#=            _model.Description #>管理" class="easyui-datagrid"  
+    url="@Url.Action("list")"
+    toolbar="#<#=            _model.Name #>_toolbar" pagination="true" pagePosition="bottom"
+    rownumbers="true" fitcolumns="true" singleselect="true" fit="true" striped="true">
+    <thead>
+        <tr>
+            <th field="ID" width="50">ID</th>
+            <th field="Name" width="50">名称</th>
+            <th field="Deleted" width="50" formatter="Mt.JHelper.IsDeleteFormatter">启用</th>
+        </tr>
+    </thead>
+</table>
+<div id="<#=            _model.Name #>_toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-add" plain="true" onclick="<#=            _model.Name #>_create()">新增</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-edit" plain="true" onclick="<#=            _model.Name #>_edit()">编辑</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconcls="icon-remove" plain="true" onclick="<#=            _model.Name #>_deleteSingle()">删除</a>
+    <div id="searchbox">
+        <form id="<#=            _model.Name #>_searchform">
+            @Html.EditorForModel()
+            <div class="form-field form-field-submit">
+                <button type="button" onclick="<#=            _model.Name #>_getSearch()" class="btn btn-green btn-save ">
+                    <i class="icon-button icon-btn-search"></i>
+                    查 询</button>
+            </div>
+  
+        </form>
+    </div>
+</div>
+
+<div id="<#=            _model.Name #>_kwindow" class="easyui-dialog" data-options="iconCls:'icon-save',modal:true,closed:true,onLoad:<#=            _model.Name #>_onformLoad" style="width: 500px; height: auto;">
+</div>
+
+<script type="text/javascript">
+
+
+    $(function () {
+        var resizeHandler = null;
+        $(window).resize(function () {
+            if (resizeHandler) clearTimeout(resizeHandler);
+            resizeHandler = setTimeout(function () {
+                $('#<#=            _model.Name #>_dg').datagrid('resize');
+            }, 200);
+        });
+    })
+
+    function <#=            _model.Name #>_create() {
+        var url = "@Url.Action("Create")";
+        $('#<#=            _model.Name #>_kwindow').dialog('open')
+        .dialog('refresh', url)
+
+    }
+    function <#=            _model.Name #>_onformLoad() {
+        var title = $('#<#=            _model.Name #>_kwindow').find('form').attr('formtitle');
+        $('#<#=            _model.Name #>_kwindow')
+        .dialog('setTitle', title).dialog('center');
+        $.validator.unobtrusive.parse($('#<#=            _model.Name #>_kwindow'));
+    }
+
+    function <#=            _model.Name #>_edit() {
+        var row = $('#<#=            _model.Name #>_dg').datagrid('getSelected');
+        if (!row) {
+            Mt.JHelper.showError('提醒', '请选择要编辑的行');
+        } else {
+            var url = "@Url.Action("Edit")" + "/" + row.ID;
+            $('#<#=            _model.Name #>_kwindow').dialog('open')
+            .dialog('refresh', url)
+        }
+    }
+
+    function <#=            _model.Name #>_deleteSingle() {
+        var row = $('#<#=            _model.Name #>_dg').datagrid('getSelected');
+        if (!row) {
+            Mt.JHelper.showError('提醒', '请选择要删除的行');
+        } else {
+            var id = row.ID;
+            $.messager.confirm('删除提醒', '确认删除该项?', function (r) {
+                if (r) {
+                    $.post("@Url.Action("Delete")", { ID: id }, function (res) {
+                        Mt.JHelper.showMessage(res);
+                        if (res.Success) {
+                            $('#<#=            _model.Name #>_dg').datagrid('reload');
+                        }
+                    })
+                }
+            });
+        }
+    }
+
+    function <#=            _model.Name #>_ajaxFormSuccess(res) {
+        Mt.JHelper.showMessage(res);
+        if (res.Success) {
+            $('#<#=            _model.Name #>_kwindow').dialog('close')
+            $('#<#=            _model.Name #>_dg').datagrid('reload');
+        }
+    }
+    function <#=            _model.Name #>_getSearch() {
+        var data = $('#<#=            _model.Name #>_searchform').serializeFormJSON();
+        $('#<#=            _model.Name #>_dg').datagrid('load', data);
+    }
+
+</script>
+
+
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

@@ -1,0 +1,143 @@
+﻿.icon-button {
+    height: 23px;
+    width: 16px;
+    float: left;
+    padding-right: 3px;
+}
+
+.link-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
+    float: left;
+    margin-right: 5px;
+    overflow: hidden;
+}
+
+.icon-btn-save {
+    background: url('images/16/page_save.png') no-repeat scroll 0px 4px;
+}
+
+.icon-btn-search {
+    background: url('images/search.png') no-repeat scroll 0px 4px;
+}
+
+
+.icon-controller {
+    background: url('images/16/laptop_key.png') no-repeat;
+}
+
+.icon-action {
+    background: url('images/16/application_double.png') no-repeat;
+}
+
+.icon-role {
+    background: url('images/16/group_key.png') no-repeat;
+}
+
+.icon-group {
+    background: url('images/16/group.png') no-repeat;
+}
+
+.icon-user {
+    background: url('images/16/user.png') no-repeat;
+}
+
+.icon-department {
+    background: url('images/16/chart_organisation.png') no-repeat;
+}
+
+.icon-btn-delete {
+    background: url('images/16/delete.png') no-repeat;
+}
+
+.icon-arrow-left {
+    background: url('images/16/arrow_left.png') no-repeat;
+}
+
+.icon-arrow-right {
+    background: url('images/16/arrow_right.png') no-repeat;
+}
+
+.icon-city {
+    background: url('images/16/chart_bar.png') no-repeat;
+}
+
+.icon-contractcate {
+    background: url('images/16/book_red.png') no-repeat;
+}
+
+.icon-coopcate {
+    background: url('images/16/20130410120031302_easyicon_net_16.png') no-repeat;
+}
+
+.icon-customercate {
+    background: url('images/16/03.gif') no-repeat;
+}
+
+.icon-filecate {
+    background: url('images/16/book_open.png') no-repeat;
+}
+
+.icon-industrycate {
+    background: url('images/16/1012333.png') no-repeat;
+}
+
+.icon-jobcate {
+    background: url('images/16/award_star_bronze_1.png') no-repeat;
+}
+
+.icon-jobtitlecate {
+    background: url('images/16/asterisk_orange.png') no-repeat;
+}
+
+.icon-relationcate {
+    background: url('images/16/color.png') no-repeat;
+}
+
+.icon-sourcecate {
+    background: url('images/16/color_wheel.png') no-repeat;
+}
+
+.icon-customercompany {
+    background: url('images/16/table_column_add.png') no-repeat;
+}
+
+.icon-share {
+    background: url('images/16/share.png') no-repeat;
+}
+
+.icon-shareme {
+    background: url('images/16/folder_user.png') no-repeat;
+}
+
+.icon-view {
+    background: url('images/16/eye.png') no-repeat;
+}
+
+.icon-refresh {
+    background: url('images/16/arrow_refresh.png') no-repeat;
+}
+
+.icon-delete {
+    background: url('images/delete.png') no-repeat;
+}
+
+.icon-replace {
+    background: url('images/16/database_refresh.png') no-repeat;
+}
+
+.icon-task {
+    background: url('images/16/calendar_select_day.png') no-repeat;
+}
+
+.icon-notice {
+    background: url('images/16/bell.png') no-repeat;
+}
+
+.icon-tcnotice {
+    background: url('images/16/bell_silver.png') no-repeat;
+}
+.icon-setting {
+    background: url('images/16/2012080404391.png') no-repeat;
+}

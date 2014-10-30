@@ -1,0 +1,66 @@
+﻿
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class Validator : MtTemplate
+    {
+
+        public Validator(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return string.Format("{0}Validator.cs", _model.Name);
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\Models\\Validator";
+            }
+        }
+
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using FluentValidation;
+
+namespace SanXing.ViewModels.Validator
+{
+    public class <#=            _model.Name #>Validator : AbstractValidator<<#=            _model.Name #>Model>
+    {
+        public <#=            _model.Name #>Validator()
+        {
+            RuleFor(x => x.Name)
+                  .NotEmpty().WithMessage("请输入<#=            _model.Description #>");
+        }
+    }
+}
+<#+
+               return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

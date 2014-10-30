@@ -1,0 +1,65 @@
+﻿
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class ViewEdit: MtTemplate
+    {
+
+        public ViewEdit(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return "Edit.cshtml";
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return string.Format(@"\Views\{0}", _model.Name );
+            }
+        }
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+<div class="ajax-form-container">
+    @using (Ajax.BeginForm("edit", "<#=            _model.Name #>", new AjaxOptions()
+{
+    OnSuccess = "<#=            _model.Name #>_ajaxFormSuccess",
+    OnFailure = "ajaxFormFailure"
+}, new { formtitle = "编辑<#=            _model.Description #>" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.EditorForModel()
+        <div class="form-field form-field-submit">
+            <button type="submit" class="btn btn-green btn-save ">
+                <i class="icon-button icon-btn-save"></i>
+                保 存</button>
+        </div>
+    }
+</div>
+
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

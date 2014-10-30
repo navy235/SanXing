@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="19ca0d14cc0145268b26fb8bc0dd1a25" Name="关系图1" >
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="3" PointY="4.25" />
+        <EntityTypeShape EntityType="Model.Cost" Width="1.5" PointX="3.875" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.Plan" Width="1.5" PointX="5.25" PointY="10.5" />
+        <EntityTypeShape EntityType="Model.Contact" Width="1.5" PointX="2.75" PointY="9" />
+        <EntityTypeShape EntityType="Model.RichType" Width="1.5" PointX="0.5" PointY="7.625" />
+        <EntityTypeShape EntityType="Model.CostType" Width="1.5" PointX="6.125" PointY="1" />
+        <AssociationConnector Association="Model.ContactRichType" />
+        <AssociationConnector Association="Model.CostCostType" />
+        <EntityTypeShape EntityType="Model.ContactRecord" Width="1.5" PointX="5.25" PointY="6.5" />
+        <EntityTypeShape EntityType="Model.ContactWay" Width="1.5" PointX="7.75" PointY="6.75" />
+        <AssociationConnector Association="Model.ContactRecordContactWay" />
+        <EntityTypeShape EntityType="Model.ContactType" Width="1.5" PointX="0.625" PointY="11.75" />
+        <AssociationConnector Association="Model.ContactContactType" />
+        <EntityTypeShape EntityType="Model.Blog" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="Model.BlogType" Width="1.5" PointX="0.75" PointY="4.625" />
+        <AssociationConnector Association="Model.SublimeTypeReadSublime" />
+        <AssociationConnector Association="Model.ReadSublimeUser" />
+        <AssociationConnector Association="Model.ContactUser" />
+        <AssociationConnector Association="Model.CostUser" />
+        <AssociationConnector Association="Model.UserContactRecord" />
+        <AssociationConnector Association="Model.ContactContactRecord" />
+        <AssociationConnector Association="Model.UserSublimeType" />
+        <EntityTypeShape EntityType="Model.TimeCost" Width="1.5" PointX="5.25" PointY="3.875" />
+        <EntityTypeShape EntityType="Model.TimeCostType" Width="1.5" PointX="7.75" PointY="4" />
+        <AssociationConnector Association="Model.TimeCostTimeCostType" />
+        <AssociationConnector Association="Model.TimeCostUser" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

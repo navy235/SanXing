@@ -1,0 +1,86 @@
+﻿
+<#+
+    // <copyright file="AutoMapperStartupTask.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class AutoMapperStartupTask : MtTemplate
+    {
+
+        public AutoMapperStartupTask(IEnumerable<Type> types):base(types)
+        {  
+        }
+
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return "AutoMapperStartupTask.cs";
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\ModelMapper";
+            }
+        }
+
+        public void RenderPropertry(){
+            WriteLine(" ");
+            foreach(Type modelType in _types)
+            {
+                T4ModelInfo minfo = new T4ModelInfo(modelType, true);
+                WriteLine(string.Format("             Mapper.CreateMap<{0}, {0}Model>();",minfo.Name));
+                WriteLine(string.Format("             Mapper.CreateMap<{0}Model, {0}>();",minfo.Name));
+                WriteLine(" ");
+            }
+        }
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using AutoMapper;
+using Mt.Core.Infrastructure;
+using SanXing.Data.Models;
+
+namespace SanXing.Web.ModelMapper
+{
+    public class AutoMapperStartupTask : IStartupTask
+    {
+
+        public void Execute()
+        {
+        <#+
+            RenderPropertry();
+        #>
+        }
+
+        public int Order
+        {
+            get { return 0; }
+        }
+    }
+}
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

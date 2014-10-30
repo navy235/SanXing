@@ -1,0 +1,121 @@
+﻿
+<#+
+    // <copyright file="AutoMapperStartupTask.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class RegisterIOC : MtTemplate
+    {
+
+        public RegisterIOC(IEnumerable<Type> types):base(types)
+        {  
+        }
+
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return "DependencyRegistrar.cs";
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\IOC";
+            }
+        }
+
+        public void RenderPropertry(){
+            WriteLine(" ");
+            foreach(Type modelType in _types)
+            {
+                T4ModelInfo minfo = new T4ModelInfo(modelType, true);
+                WriteLine(string.Format("             builder.RegisterType<{0}Service>().As<I{0}Service>().InstancePerRequest();",minfo.Name));
+                WriteLine(" ");
+            }
+        }
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Web;
+using Autofac;
+using Autofac.Builder;
+using Autofac.Core;
+using Autofac.Integration.Mvc;
+using Mt.Core;
+using Mt.Core.Data;
+using Mt.Core.Infrastructure;
+using Mt.Core.Infrastructure.DependencyManagement;
+using SanXing.Data;
+using SanXing.Data.Service;
+using SanXing.Data.Impl;
+
+namespace SanXing.Web.Framework
+{
+    public class DependencyRegistrar : IDependencyRegistrar
+    {
+        public virtual void Register(ContainerBuilder builder, ITypeFinder typeFinder)
+        {
+            builder.Register(c => new HttpContextWrapper(HttpContext.Current) as HttpContextBase)
+                .As<HttpContextBase>()
+                .InstancePerRequest();
+            builder.Register(c => c.Resolve<HttpContextBase>().Request)
+                .As<HttpRequestBase>()
+                .InstancePerRequest();
+            builder.Register(c => c.Resolve<HttpContextBase>().Response)
+                .As<HttpResponseBase>()
+                .InstancePerRequest();
+            builder.Register(c => c.Resolve<HttpContextBase>().Server)
+                .As<HttpServerUtilityBase>()
+                .InstancePerRequest();
+            builder.Register(c => c.Resolve<HttpContextBase>().Session)
+                .As<HttpSessionStateBase>()
+                .InstancePerRequest();
+
+            //注册所有的Controller
+            builder.RegisterControllers(typeFinder.GetAssemblies().ToArray());
+
+            builder.Register<IDbContext>(c =>
+                 new MtObjectContext())
+                .InstancePerRequest();
+
+            builder.RegisterGeneric(typeof(EfRepository<>))
+                .As(typeof(IRepository<>)).InstancePerRequest();
+
+
+              <#+
+            RenderPropertry();
+        #>
+
+        }
+
+        public int Order
+        {
+            get { return 0; }
+        }
+    }
+}
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

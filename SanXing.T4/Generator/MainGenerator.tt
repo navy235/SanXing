@@ -1,0 +1,85 @@
+﻿<#@ template language="C#" debug="True" #>
+<#@ output extension="cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="$(SolutionDir)\Mt.Core\bin\Debug\Mt.Core.dll" #>
+<#@ import namespace="System.IO" #>
+<#@ Import Namespace="System.Linq" #>
+<#@ Import Namespace="System.Text" #>
+<#@ import namespace="System.Reflection" #>
+<#@ Import Namespace="System.Collections.Generic" #>
+<#@ Import Namespace="Mt.Core" #>
+<#@ Import Namespace="Mt.Core.T4" #>
+<#@ Import Namespace="Mt.Core.Infrastructure" #>
+<#@ include file="T4Toolbox.tt" #>
+<#@ include file="Include\Controller.tt" #>
+<#@ include file="Include\ViewModel.tt" #>
+<#@ include file="Include\Validator.tt" #>
+<#@ include file="Include\ViewList.tt" #>
+<#@ include file="Include\ViewEdit.tt" #>
+<#@ include file="Include\ViewCreate.tt" #>
+<#@ include file="Include\Service.tt" #>
+<#@ include file="Include\Impl.tt" #>
+<#@ include file="Include\RegisterIOC.tt" #>
+<#@ include file="Include\AutoMapperStartupTask.tt" #>
+<#@ include file="Include\MappingExtensions.tt" #>
+<#+
+    // <copyright file="MainGenerator.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class MainGenerator : Generator
+    {
+
+        public IEnumerable<MtTemplate> Templates{get;  set;}
+
+        public IEnumerable<Type> ModelTypes {get;set;}
+
+        public string SolutionPath {get;set;}
+
+        public string ProjectPath {get;set;}
+  
+        public MainGenerator(string currentPath)
+        {
+            //System.Diagnostics.Debugger.Launch(); 
+         
+            ProjectPath =currentPath.Substring(0, currentPath.IndexOf(@"\Generator"));
+            SolutionPath = currentPath.Substring(0, currentPath.IndexOf(@"\SanXing.T4"));
+            string modelFile= Path.Combine(SolutionPath, @"SanXing.Data\bin\Debug\SanXing.Data.dll");
+ 
+            Assembly assembly = Assembly.LoadFrom(modelFile);
+            Type baseType = typeof(BaseEntity);
+            ModelTypes = assembly.GetTypes().Where(m => baseType.IsAssignableFrom(m) && !m.IsAbstract);
+        
+            this.Templates = InitlizeTemplates(ModelTypes);
+        }
+    
+        private IEnumerable<MtTemplate> InitlizeTemplates(IEnumerable<Type> modelTypes)
+        {        
+            foreach(Type modelType in modelTypes)
+            {
+                T4ModelInfo model = new T4ModelInfo(modelType, true);
+                //yield return new Controller(model);
+                yield return new Service(model);
+                //yield return new ViewModel(model);
+                //yield return new Validator(model);
+                //yield return new ViewList(model);
+                //yield return new ViewEdit(model);
+                //yield return new ViewCreate(model);
+                //yield return new Impl(model);
+          
+            }
+            //yield return new AutoMapperStartupTask(modelTypes);
+            //yield return new MappingExtensions(modelTypes);
+            yield return new RegisterIOC(modelTypes);
+        }
+        protected override void RunCore()
+        {
+            foreach(MtTemplate tempalte in this.Templates)
+            {
+                tempalte.Output.Encoding = Encoding.UTF8;
+                var path =  string.Format(@"{0}{1}", ProjectPath,tempalte.SavePath);
+                tempalte.RenderToFile(Path.Combine(path, tempalte.FileName));
+            }
+        }
+    }
+#>

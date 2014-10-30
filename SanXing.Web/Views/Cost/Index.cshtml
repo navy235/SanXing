@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "费用一览";
+
+    var table = (MonthTableViewModel)ViewBag.MonthTable;
+}
+
+<div class="page-header">
+    <div class="btn-group pull-right">
+        @if (table.Month == 1)
+        {
+            <a class="btn btn-default disabled" href="javascript:void(0);">&laquo;上个月</a>
+        }
+        else
+        {
+            <a class="btn btn-default " href="@Url.Action("index", "task", new { Month = table.Month - 1 })">&laquo;上个月</a>
+        }
+
+        @if (table.Month == 12)
+        {
+            <a class="btn btn-default disabled" href="javascript:void(0);">&raquo;下个月</a>
+        }
+        else
+        {
+            <a class="btn btn-default " href="@Url.Action("index", "task", new { Month = table.Month + 1 })">&raquo;下个月</a>
+        }
+    </div>
+    <h1>@(table.Year + "年" + table.Month + "月")费用一览</h1>
+</div>
+
+<div class="table table-responsive table-container">
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>星期日</th>
+                <th>星期一</th>
+                <th>星期二</th>
+                <th>星期三</th>
+                <th>星期四</th>
+                <th>星期五</th>
+                <th>星期六</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var dayNumber = 1;    
+            }
+            @for (var i = 0; i < table.MaxRows; i++)
+            {
+                <tr>
+                    @for (var n = 0; n < 7; n++)
+                    {
+                        if (i == 0 && n < table.FirstRowIndex)
+                        { 
+                        <td>
+                            <div class="task-empty"></div>
+                        </td>
+                        }
+                        else if (i * 7 + n + 1 - table.FirstRowIndex > table.DayCount)
+                        { 
+                        <td>
+                            <div class="task-empty"></div>
+                        </td>
+                        }
+                        else
+                        {
+                        <td data-date="@(new DateTime(table.Year, table.Month, dayNumber).ToString("yyyy-MM-dd"))"
+                             class="task-td @(new DateTime(table.Year, table.Month, dayNumber).ToString("yyyy-MM-dd").Equals(DateTime.Now.ToString("yyyy-MM-dd")) ? "task-td-today" : "")">
+                            <div class="task-container">
+                                <div class="task-day">@dayNumber</div>
+                            </div>
+                        </td>
+                            dayNumber++;
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: -161px;" aria-hidden="true">
+    
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('.task-td').on('click', create)
+
+            function create(e) {
+                var target = $(e.currentTarget);
+                var url = '@Url.Action("create")';
+                var data = { date: target.data('date') };
+                $.get(url, data, function (res) {
+                    $('#ajax-modal').html(res);
+                    $('#ajax-modal').modal();
+                })
+            }
+        })
+
+    </script>
+}

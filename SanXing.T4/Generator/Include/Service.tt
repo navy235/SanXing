@@ -1,0 +1,72 @@
+﻿<#@ include file="MtTemplate.tt" #>
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class Service : MtTemplate
+    {
+
+        public Service(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return string.Format("I{0}Service.cs", _model.Name);
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\Service";
+            }
+        }
+
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using Mt.Core;
+using SanXing.Data.Models;
+using System.Linq;
+
+namespace SanXing.Data.Service
+{
+    public interface I<#=            _model.Name #>Service
+    {
+        <#=            _model.Name #> Single(int ID);
+
+        void Delete(<#=            _model.Name #> entity);
+
+        IPagedList<<#=            _model.Name #>> GetAll(int pageIndex, int pageSize, bool showHidden = false);
+
+        void Insert(<#=            _model.Name #> entity);
+
+        void Update(<#=            _model.Name #> entity);
+
+        IQueryable<<#=            _model.Name #>> GetAll();
+    }
+}
+
+
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

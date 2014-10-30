@@ -1,0 +1,328 @@
+﻿
+.ajax-form-container {
+    padding: 10px;
+}
+
+.field-valid-text {
+    visibility: hidden;
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.form-field {
+    padding: 0px 0 10px 80px;
+    -webkit-tap-highlight-color: rgba(255,0,0,0);
+    position: relative;
+}
+
+.field-label {
+    float: left;
+    width: 80px;
+    margin-left: -80px;
+    display: block;
+    overflow: hidden;
+    font-weight: normal;
+}
+
+    .field-label.field-required:after {
+        content: "*";
+        color: #f60;
+        margin-left: 5px;
+    }
+
+.form-submit {
+    padding: 0px 0 10px 80px;
+    line-height: 26px;
+    overflow: hidden;
+    -webkit-tap-highlight-color: rgba(255,0,0,0);
+    position: relative;
+}
+
+input.single-line {
+    width: 180px;
+    height: 18px;
+    outline: 0;
+    border: 1px solid #c6c6c6;
+    padding: 2px;
+}
+
+.form-field select {
+    height: 24px;
+    line-height: 18px;
+    text-align: left;
+    border: 1px solid #c6c6c6;
+    display: inline;
+    outline: 0;
+    margin-right: 5px;
+    margin: 0;
+    padding: 0;
+}
+
+textarea.multi-line {
+    border: 1px solid #c6c6c6;
+    vertical-align: middle!important;
+    width: 180px;
+    height: 100px;
+    outline: 0;
+    padding: 2px;
+}
+
+
+
+#searchbox {
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+    #searchbox .form-field {
+        padding: 0px 0 0px 60px;
+        line-height: 30px;
+        float: left;
+        height: 30px;
+        min-width: 100px;
+    }
+
+    #searchbox .field-label {
+        float: left;
+        width: 65px;
+        margin-left: -60px;
+        line-height: 30px;
+        text-align: right;
+        padding-right: 5px;
+    }
+
+    #searchbox input.single-line {
+        width: 80px;
+    }
+
+    #searchbox .form-field-submit {
+        padding: 0px 0 0px 20px;
+    }
+
+
+
+
+input.input-validation-error,
+textarea.input-validation-error,
+select.input-validation-error {
+    border: 1px solid #ff8700;
+    background: #FFFCEF;
+    color: #333;
+}
+
+input.k-vcode {
+    width: 52px;
+    font: bold 14px Verdana;
+    text-align: center;
+}
+
+
+.form-field .k-numerictextbox {
+    width: 120px;
+}
+
+.form-cascading {
+    display: inline-block;
+}
+
+.form-textarea textarea {
+    width: 205px;
+    height: 150px;
+}
+
+.form-longtext .single-line {
+    width: 360px;
+}
+
+.field-hint-message {
+    display: block;
+    color: gray;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+
+
+.field-validation-error {
+    left: 290px;
+    line-height: 22px;
+    padding: 0 10px 0 22px;
+    position: absolute;
+    top: 0px;
+    z-index: 550;
+}
+
+
+.field-prompt-message {
+    display: block;
+    color: gray;
+    margin-top: 2px;
+}
+
+.field-validation-error {
+    color: #f00;
+    background-color: #fbe3e4;
+    border: solid 1px #c13a3f;
+    display: block;
+    background: url(images/16/form_error.png) 3px 2px no-repeat;
+}
+
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00;
+    background-color: #fee;
+}
+
+.validation-summary-errors {
+    font-weight: bold;
+    color: #f00;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+
+
+.field-uploadimg-list {
+    overflow: hidden;
+}
+
+.field-uploadimg-box {
+    margin-bottom: 10px;
+}
+
+    .field-uploadimg-box img {
+        border: 1px solid #ccc;
+        padding: 2px;
+        max-width: 120px;
+    }
+
+.k-upload-button {
+    background: url(images/uploadbtn.png) no-repeat !important;
+    border: 0 !important;
+    height: 27px;
+    position: relative;
+    width: 90px;
+}
+
+.field-uploadfile .k-upload-button {
+    background: url(images/uploadbtn-file.png) no-repeat !important;
+}
+
+.img-item {
+    float: left;
+    position: relative;
+    margin: 0px 10px 10px 0;
+    display: none;
+}
+
+.k-upload-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    font: 200px monospace!important;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    display: block;
+    width: 90px;
+    height: 27px;
+    overflow: hidden;
+}
+
+.k-upload-button span {
+    visibility: hidden;
+}
+
+.k-dropzone em {
+    visibility: hidden;
+    margin-left: 0;
+    height: 0;
+    display: block;
+}
+
+.img-item .k-icon {
+    display: block;
+}
+
+.img-item img {
+    width: 120px;
+    height: 100px;
+    padding: 5px;
+    border: 1px solid #bbb;
+}
+
+.img-item .img-item-close {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    height: 16px;
+    width: 16px;
+    background: #fff;
+    display: block;
+    cursor: pointer;
+}
+
+.img-item .img-item-bar {
+    position: absolute;
+    width: 100%;
+    height: 25px;
+    background: #000;
+    opacity: 0.7;
+    bottom: 0;
+    left: 0;
+    text-align: center;
+}
+
+    .img-item .img-item-bar .img-item-sorter-right {
+        display: block;
+        position: absolute;
+        right: 5px;
+        height: 16px;
+        width: 16px;
+        top: 5px;
+        cursor: pointer;
+    }
+
+
+    .img-item .img-item-bar .img-item-sorter-left {
+        display: block;
+        position: absolute;
+        left: 5px;
+        height: 16px;
+        width: 16px;
+        top: 5px;
+        cursor: pointer;
+    }
+
+.table {
+    width: 100%;
+}
+
+.table-bordered {
+    border: 1px solid #dddddd;
+}
+
+.td-required {
+    color: #f00;
+}
+
+.th-title {
+    text-align: center;
+}
+
+.td-title {
+    width: 100px;
+}

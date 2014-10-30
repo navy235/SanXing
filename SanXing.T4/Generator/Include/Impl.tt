@@ -1,0 +1,128 @@
+﻿
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class Impl : MtTemplate
+    {
+
+        public Impl(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return string.Format("{0}Service.cs", _model.Name);
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\Impl";
+            }
+        }
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using System;
+using System.Linq;
+using Mt.Core;
+using Mt.Core.Data;
+using SanXing.Data.Models;
+using SanXing.Data.Service;
+
+namespace Mt.Data.Impl
+{
+    public partial class <#=            _model.Name #>Service : I<#=            _model.Name #>Service
+    {
+
+        #region Fields
+
+        private readonly IRepository<<#=            _model.Name #>> _<#=            _model.Name #>Repository;
+
+        #endregion
+
+        #region Ctor
+
+        public <#=            _model.Name #>Service(IRepository<<#=            _model.Name #>> <#=            _model.Name #>Repository
+           )
+        {
+            this._<#=            _model.Name #>Repository = <#=            _model.Name #>Repository;
+
+        }
+
+        #endregion
+
+        public <#=            _model.Name #> Single(int ID)
+        {
+            if (ID == 0)
+                return null;
+
+            return _<#=            _model.Name #>Repository.GetById(ID);
+        }
+
+        public void Delete(<#=            _model.Name #> entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("<#=            _model.Name #>");
+
+            entity.Deleted = true;
+            Update(entity);
+        }
+
+        public IPagedList<<#=            _model.Name #>> GetAll(int pageIndex, int pageSize, bool showHidden = false)
+        {
+            var query = _<#=            _model.Name #>Repository.Table;
+            if (!showHidden)
+                query = query.Where(a => !a.Deleted);
+            query = query.OrderByDescending(a => a.ID);
+
+            var result = new PagedList<<#=            _model.Name #>>(query, pageIndex, pageSize);
+            return result;
+        }
+
+        public IQueryable<<#=            _model.Name #>> GetAll()
+        {
+            return _<#=            _model.Name #>Repository.Table;
+        }
+
+        public void Insert(<#=            _model.Name #> entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("<#=            _model.Name #>");
+            _<#=            _model.Name #>Repository.Insert(entity);
+        }
+
+        public void Update(<#=            _model.Name #> entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException("<#=            _model.Name #>");
+
+            _<#=            _model.Name #>Repository.Update(entity);
+        }
+    }
+}
+
+
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>

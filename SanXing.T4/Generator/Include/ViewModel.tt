@@ -1,0 +1,121 @@
+﻿
+<#+
+    // <copyright file="Controller.tt" company="">
+    //  Copyright © . All Rights Reserved.
+    // </copyright>
+
+    public class ViewModel: MtTemplate
+    {
+
+        public ViewModel(T4ModelInfo model):base(model)
+        {  
+        }
+        /// <summary>
+        /// 获取 生成的文件名，根据模型名定义
+        /// </summary>
+        public override string FileName
+        {
+            get
+            { 
+                return string.Format("{0}Model.cs", _model.Name);
+            }
+        }
+
+        public override string ModuleName
+        {
+            get
+            { 
+                return _model.Name;
+            }
+        }
+
+        public override string SavePath
+        {
+            get
+            { 
+                return "\\Models";
+            }
+        }
+
+        public void RenderPropertry(){
+            WriteLine(" ");
+            foreach(var prop in _model.Properties){
+                if(prop.Name=="ID"){
+                    WriteLine("            [HiddenInput(DisplayValue = false)]");
+                    WriteLine(string.Format("            public override int {0};",prop.Name));
+                    WriteLine(" ");
+                }else  if(prop.Name=="Deleted"){
+                    WriteLine(string.Format("            [HiddenInput(DisplayValue = false)]",prop.Name));
+                    WriteLine(string.Format("            public bool {0};",prop.Name));
+                    WriteLine(" ");
+                }else{
+                    WriteLine(string.Format("            [Display(Name = \"{0}\")]",prop.Name));
+                    WriteLine(string.Format("            public {1} {0};",prop.Name,prop.PropertyType.Name));
+                    WriteLine(" ");
+                }
+            }
+        }
+
+        public void RenderListPropertry(){
+            WriteLine(" ");
+            foreach(var prop in _model.Properties){
+                WriteLine(string.Format("            [Display(Name = \"{0}\")]",prop.Name));
+                WriteLine(string.Format("            public {1} {0};",prop.Name,prop.PropertyType.Name));
+                WriteLine(" ");
+            }
+        }
+
+        public void RenderSearchPropertry(){
+            WriteLine(" ");
+            foreach(var prop in _model.Properties.Where(x=>x.Name!="ID"||x.Name!="Deleted")){
+                WriteLine(string.Format("            [Display(Name = \"{0}\")]",prop.Name));
+                WriteLine(string.Format("            public {1} {0};",prop.Name,prop.PropertyType.Name));
+                WriteLine(" ");
+            }
+        }
+
+        public override string TransformText()
+        {
+            base.TransformText();
+#>
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using FluentValidation;
+using FluentValidation.Attributes;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+using System.Web.Mvc;
+using SanXing.Web.Framework.Mvc;
+using SanXing.ViewModels.Validator;
+
+namespace SanXing.ViewModels
+{
+    [Validator(typeof(<#=            _model.Name #>Validator))]
+    public class <#=            _model.Name #>Model : BaseMtEntityModel
+    {
+        [HiddenInput(DisplayValue = false)]
+        public override int ID { get; set; }
+
+ 
+
+    }
+
+    public class <#=            _model.Name #>SearchModel : BaseMtSearchModel
+    {
+
+    }
+
+    public class <#=            _model.Name #>ListItemModel
+    {
+        [Display(Name = "ID")]
+        public int ID { get; set; }
+    }
+
+}
+<#+
+            return this.GenerationEnvironment.ToString();
+        }
+    }
+#>
