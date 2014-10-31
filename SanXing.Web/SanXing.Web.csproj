@@ -126,11 +126,11 @@
     <Content Include="Binaries\Kendo.Mvc.xml" />
     <Content Include="Content\animate.css" />
     <Content Include="Content\animate.min.css" />
-    <Content Include="Content\bootstrap\bootstrap-datetimepicker.css" />
     <Content Include="Content\bootstrap\bootstrap-modal-bs3patch.css" />
     <Content Include="Content\bootstrap\bootstrap-modal.css" />
     <Content Include="Content\bootstrap\bootstrap-select.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
+    <Content Include="Content\bootstrap\bootstrap-datepicker3.css" />
     <Content Include="Content\button.css" />
     <Content Include="Content\display.css" />
     <Content Include="Content\form.css" />
@@ -3386,7 +3386,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\base\base-helper.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-modal.js" />
     <Content Include="Scripts\bootstrap-modalmanager.js" />
     <Content Include="Scripts\bootstrap-select.js" />
@@ -3415,10 +3416,12 @@
     <Content Include="Content\kendo\2012.3.1114\images\KendoUI.woff" />
     <Content Include="Content\kendo\2014.1.22\images\kendoui.ttf" />
     <Content Include="Content\kendo\2014.1.22\images\kendoui.woff" />
+    <Content Include="Content\bootstrap\bootstrap-spinner.less" />
     <None Include="Scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="Scripts\jquery-1.9.0.js" />
     <Content Include="Scripts\jquery-1.9.0.min.js" />
     <Content Include="Scripts\jquery.Jcrop.min.js" />
+    <Content Include="Scripts\bootstrap-spinner.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -3433,7 +3436,6 @@
     <Content Include="Scripts\kendo\2012.3.1114\kendo.all.min.js" />
     <Content Include="Scripts\kendo\2012.3.1114\kendo.aspnetmvc.min.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Scripts\moment.js" />
     <Content Include="Scripts\ueditor\dialogs\emotion\emotion.css" />
     <Content Include="Scripts\ueditor\dialogs\emotion\emotion.js" />
     <Content Include="Scripts\ueditor\dialogs\emotion\images\0.gif" />
@@ -3543,7 +3545,6 @@
     <Content Include="Views\Shared\DisplayTemplates\CheckList.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DropdownList.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\IntegerExtension.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MapMarker.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Object.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Price.cshtml" />
@@ -3565,7 +3566,6 @@
     <Content Include="Views\Shared\EditorTemplates\GridSelectSingle.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\GroupForeignKeyForCheckBox.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\IntegerExtension.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MapMarker.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Object_bank.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
@@ -3610,6 +3610,8 @@
     <Content Include="Views\Cost\Index.cshtml" />
     <Content Include="Views\Cost\YeakMonthWeek.cshtml" />
     <Content Include="Views\Cost\Create.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GroupDropDownList.cshtml" />
+    <Content Include="Views\Cost\CostItem.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -3619,6 +3621,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Log\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mt.Core\Mt.Core.csproj">

@@ -2531,7 +2531,7 @@ select[multiple].input-lg {
 .form-control-feedback {
   position: absolute;
   top: 25px;
-  right: 10px;
+  right: 20px;
   z-index: 2;
   display: block;
   width: 34px;

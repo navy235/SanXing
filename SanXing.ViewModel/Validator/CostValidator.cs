@@ -21,8 +21,12 @@ namespace SanXing.ViewModels.Validator
             RuleFor(x => x.CostTypeID)
               .NotEmpty().WithMessage("请选择费用类别");
 
-            RuleFor(x => x.Money).LessThan(0).WithMessage("请输入大于0的金额");
+            RuleFor(x => x.Money)
+                .NotEmpty().WithMessage("请输入金额")
+                .GreaterThan(0).WithMessage("请输入大于0的金额");
 
+            RuleFor(x => x.Description)
+             .NotEmpty().WithMessage("请输入费用描述");
         }
     }
 }

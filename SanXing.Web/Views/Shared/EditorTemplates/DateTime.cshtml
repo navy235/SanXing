@@ -2,15 +2,25 @@
 @{
     var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
 }
-<div class='input-group date' id='@(name)_datetimepicker'>
-   @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control" })
-    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
-    </span>
+<div class='input-group date' id='@(name)_datepicker'>
+   @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue,new Dictionary<string,object>(){ {"class","form-control"} ,{"data-date-format","yyyy-mm-dd"}})
+   <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 </div>
 <script type="text/javascript">
     $(function () {
-        $('#@(name)_datetimepicker').datetimepicker({
-            language: 'zh-CN'
+        $('#@(name)_datepicker').datepicker({
+            format: "yyyy-mm-dd",
+            language: "zh-CN",
+            autoclose: true,
+            todayHighlight: true
+        }).on('changeDate', function (e) {
+            var parentform = $('#@(name)').parents('form:first');
+            if (parentform[0] && parentform.validate()) {
+                parentform.validate().element('#@(name)');
+            }
         });
+        $('#@(name)_datepicker').datepicker('update','@(Model.Value.ToString("yyyy-MM-dd"))')
+
+        $('#@(name)_datepicker').parents('.form-group').addClass('form-date-field')
     })
 </script>

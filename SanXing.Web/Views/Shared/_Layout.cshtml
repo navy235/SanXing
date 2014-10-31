@@ -6,12 +6,12 @@
     <title>@ViewBag.Title - 吾日三省吾身</title>
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/bootstrap/css")
- @*   @Styles.Render("~/Content/kendo/2012.3.1114/css")*@
+    @*   @Styles.Render("~/Content/kendo/2012.3.1114/css")*@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/jquerycontrol")
-  @*  <script src="~/Scripts/kendo/2012.3.1114/kendo.all.min.js"></script>
+    @*  <script src="~/Scripts/kendo/2012.3.1114/kendo.all.min.js"></script>
     <script src="~/Scripts/kendo/2012.3.1114/kendo.aspnetmvc.min.js"></script>
     <script src="~/Scripts/kendo/2012.3.1114/cultures/kendo.culture.zh-CHS.min.js"></script>
     <script type="text/javascript">
@@ -31,7 +31,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("index","cost")">费用</a></li>
+                    <li><a href="@Url.Action("index", "cost")">费用</a></li>
                     <li><a href="#">时间</a></li>
                     <li><a href="#">人脉</a></li>
                     <li><a href="#">文章</a></li>
@@ -59,6 +59,7 @@
         </footer>
     </div>
     @Html.Partial("_Message")
+    @Scripts.Render("~/bundles/base")
     @Scripts.Render("~/bundles/bootstrap")
 
     @RenderSection("scripts", required: false)

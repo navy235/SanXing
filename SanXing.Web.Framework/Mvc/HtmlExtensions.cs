@@ -236,7 +236,18 @@ namespace SanXing.Web.Framework.Mvc
             return MvcHtmlString.Create(helper.ValidationMessage(modelName).ToString().Replace("class=\"field-validation-valid\"", "class=\"field-validation-valid help-block\""));
         }
 
-        private static MvcHtmlString GroupDropdownList(this HtmlHelper htmlHelper, ModelMetadata metadata, string name,  GroupedSelect select, string selectedValue, IDictionary<string, object> htmlAttributes)
+        public static MvcHtmlString GroupDropdownListFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, GroupSelect select,  object htmlAttributes = null)
+        {
+            if (expression == null)
+            {
+                throw new ArgumentNullException("expression");
+            }
+            ModelMetadata metadata = ModelMetadata.FromLambdaExpression<TModel, TProperty>(expression, htmlHelper.ViewData);
+            string name = ExpressionHelper.GetExpressionText((LambdaExpression)expression);
+            return GroupDropdownList(htmlHelper, metadata, name, select, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
+        }
+
+        public static MvcHtmlString GroupDropdownList(this HtmlHelper htmlHelper, ModelMetadata metadata, string name, GroupSelect select,IDictionary<string, object> htmlAttributes)
         {
             string fullName = htmlHelper.ViewContext.ViewData.TemplateInfo.GetFullHtmlFieldName(name);
             if (String.IsNullOrEmpty(fullName))
@@ -247,38 +258,160 @@ namespace SanXing.Web.Framework.Mvc
             TagBuilder dropdown = new TagBuilder("select");
             dropdown.Attributes.Add("name", fullName);
             dropdown.MergeAttribute("data-val", "true");
+            dropdown.MergeAttribute("id", fullName);
 
-            if (select.Multiple) {
-                dropdown.Attributes.Add("multiple", "true");
+            if (select.Multiple)
+            {
+                dropdown.MergeAttribute("multiple", "true");
             }
-            if (select.maxOptions > 0) {
-                dropdown.Attributes.Add("multiple", "true");
+            if (select.maxOptions > 0)
+            {
+                dropdown.MergeAttribute("data-max-options", select.maxOptions.ToString());
             }
-
+            if (!string.IsNullOrEmpty(select.Style))
+            {
+                dropdown.MergeAttribute("data-style", select.Style);
+            }
+            if (select.LiveSearch)
+            {
+                dropdown.MergeAttribute("data-live-search", "true");
+            }
+            if (!string.IsNullOrEmpty(select.Title))
+            {
+                dropdown.MergeAttribute("title", select.Title);
+            }
+            if (select.SelectedTextFormat)
+            {
+                dropdown.MergeAttribute("data-selected-text-format", "count");
+            }
+            if (select.ShowTick)
+            {
+                dropdown.AddCssClass("show-tick");
+            }
+            if (select.ShowMenuArrow)
+            {
+                dropdown.AddCssClass("show-menu-arrow");
+            }
+            if (!string.IsNullOrEmpty(select.Width))
+            {
+                dropdown.MergeAttribute("data-width", select.Width);
+            }
+            if (select.Disabled)
+            {
+                dropdown.MergeAttribute("disabled", "true");
+            }
+            if (!string.IsNullOrEmpty(select.Size))
+            {
+                dropdown.MergeAttribute("data-width", select.Size);
+            }
+            if (!string.IsNullOrEmpty(select.Header))
+            {
+                dropdown.MergeAttribute("data-header", select.Header);
+            }
             dropdown.MergeAttributes(htmlAttributes); //dropdown.MergeAttributes(new RouteValueDictionary(htmlAttributes));
+
             dropdown.MergeAttributes(htmlHelper.GetUnobtrusiveValidationAttributes(name, metadata));
 
-            StringBuilder options = new StringBuilder();
+            StringBuilder innerHtml = new StringBuilder();
 
-          
-
-            foreach (var item in list)
+            foreach (var group in select.Groups)
             {
-                if (item.SelectedValue == "selected" && item.Disabled == "disabled")
-                    options = options.Append("<option value='" + item.Value + "' class='" + item.Class + "' selected='" + item.SelectedValue + "' disabled='" + item.Disabled + "'>" + item.Text + "</option>");
-                else if (item.SelectedValue != "selected" && item.Disabled == "disabled")
-                    options = options.Append("<option value='" + item.Value + "' class='" + item.Class + "' disabled='" + item.Disabled + "'>" + item.Text + "</option>");
-                else if (item.SelectedValue == "selected" && item.Disabled != "disabled")
-                    options = options.Append("<option value='" + item.Value + "' class='" + item.Class + "' selected='" + item.SelectedValue + "'>" + item.Text + "</option>");
-                else
-                    options = options.Append("<option value='" + item.Value + "' class='" + item.Class + "'>" + item.Text + "</option>");
+                var optgroup = new TagBuilder("optgroup");
+                if (!string.IsNullOrEmpty(group.Label))
+                {
+                    optgroup.MergeAttribute("label", group.Label);
+                }
+                if (group.Disabled)
+                {
+                    optgroup.MergeAttribute("disabled", "true");
+                }
+                if (group.maxOptions > 0)
+                {
+                    optgroup.MergeAttribute("data-max-options", group.maxOptions.ToString());
+                }
+
+                foreach (var item in group.Items)
+                {
+                    var option = new TagBuilder("option");
+
+                    if (!string.IsNullOrEmpty(item.Subtext))
+                    {
+                        option.MergeAttribute("data-subtext", item.Subtext);
+                    }
+                    if (!string.IsNullOrEmpty(item.Icon))
+                    {
+                        option.MergeAttribute("data-icon", item.Icon);
+                    }
+                    if (!string.IsNullOrEmpty(item.Content))
+                    {
+                        option.MergeAttribute("data-content", item.Content);
+                    }
+                    if (!string.IsNullOrEmpty(item.cssClass))
+                    {
+                        option.MergeAttribute("class", item.cssClass);
+                    }
+                    if (item.Disabled)
+                    {
+                        option.MergeAttribute("disabled", "true");
+                    }
+                    if (item.Divider)
+                    {
+                        option.MergeAttribute("data-divider", "true");
+                    }
+                    if (item.Selected)
+                    {
+                        option.MergeAttribute("selected", "true");
+                    }
+                    option.Attributes.Add("value", item.Value);
+                    option.InnerHtml = item.Text;
+                    optgroup.InnerHtml += option.ToString();
+                }
+                innerHtml.Append(optgroup.ToString());
             }
-            dropdown.InnerHtml = options.ToString();
+            foreach (var item in select.Items)
+            {
+
+                var option = new TagBuilder("option");
+
+                if (!string.IsNullOrEmpty(item.Subtext))
+                {
+                    option.MergeAttribute("data-subtext", item.Subtext);
+                }
+                if (!string.IsNullOrEmpty(item.Icon))
+                {
+                    option.MergeAttribute("data-icon", item.Icon);
+                }
+                if (!string.IsNullOrEmpty(item.Content))
+                {
+                    option.MergeAttribute("data-content", item.Content);
+                }
+                if (!string.IsNullOrEmpty(item.cssClass))
+                {
+                    option.MergeAttribute("class", item.cssClass);
+                }
+                if (item.Disabled)
+                {
+                    option.MergeAttribute("disabled", "true");
+                }
+                if (item.Divider)
+                {
+                    option.MergeAttribute("data-divider", "true");
+                }
+                if (item.Selected)
+                {
+                    option.MergeAttribute("selected", "true");
+                }
+                option.Attributes.Add("value", item.Value);
+                option.InnerHtml = item.Text;
+
+                innerHtml.Append(option.ToString());
+            }
+
+            dropdown.InnerHtml = innerHtml.ToString();
             return MvcHtmlString.Create(dropdown.ToString(TagRenderMode.Normal));
         }
 
     }
-
 
     public class PagingInfo
     {
@@ -292,7 +425,7 @@ namespace SanXing.Web.Framework.Mvc
         }
     }
 
-    public class GroupedSelect
+    public class GroupSelect
     {
         public Dictionary<string, string> Config { get; set; }
 
@@ -306,7 +439,7 @@ namespace SanXing.Web.Framework.Mvc
 
         public string Title { get; set; }
 
-        public int SelectedTextFormat { get; set; }
+        public bool SelectedTextFormat { get; set; }
 
         public bool ShowTick { get; set; }
 
@@ -323,8 +456,9 @@ namespace SanXing.Web.Framework.Mvc
         public List<GroupSelectOptgroup> Groups { get; set; }
         public List<GroupSelectItem> Items { get; set; }
 
-        public GroupedSelect()
+        public GroupSelect()
         {
+            //this.ShowTick = true;
             this.Config = new Dictionary<string, string>();
             this.Groups = new List<GroupSelectOptgroup>();
             this.Items = new List<GroupSelectItem>();
@@ -347,8 +481,6 @@ namespace SanXing.Web.Framework.Mvc
 
     public class GroupSelectItem : SelectListItem
     {
-        public string Title { get; set; }
-
         public string cssClass { get; set; }
 
         public bool Disabled { get; set; }

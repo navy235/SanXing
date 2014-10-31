@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
+using Mt.Core;
 using Mt.Core.Infrastructure;
 using SanXing.Web.Framework;
 using SanXing.Web.Framework.Mvc;
@@ -39,6 +40,8 @@ namespace SanXing.Web
             DataAnnotationsModelValidatorProvider.AddImplicitRequiredAttributeForValueTypes = false;
 
             ModelValidatorProviders.Providers.Add(new FluentValidationModelValidatorProvider(new MtValidatorFactory()));
+
+            LogHelper.SetConfig();
         }
 
     }

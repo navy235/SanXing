@@ -6,9 +6,31 @@
 {
     <div class="alert  action-info fadeOut animated   @(serviceResult.Success ? "alert-success" : "alert-warning")" >
         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
-        <p class="action-text">
-            <i class="glyphicon glyphicon-@(serviceResult.Success ? "ok-sign" : "exclamation-sign")"></i>
-            @serviceResult.Message
-        </p>
+        <i class="glyphicon glyphicon-@(serviceResult.Success ? "ok-sign" : "exclamation-sign")"></i>
+        <span class="action-text">
+            @if (serviceResult.Success)
+            { 
+                @serviceResult.Message
+            }
+            else
+            {
+                foreach (var err in serviceResult.GetServiceErrors())
+                { 
+                <p>@err.ErrorMessage</p>
+                }
+            }
+        </span>
     </div>
 }
+
+<div class="alert action-info alert-success animated" style="display: none">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <i class="glyphicon glyphicon-ok"></i>
+    <span class="action-text"></span>
+</div>
+<div class="alert action-info alert-warning animated " style="display: none">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    <i class="glyphicon glyphicon-exclamation-sign"></i>
+    <span class="action-text"></span>
+</div>
+

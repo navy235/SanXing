@@ -1,9 +1,0 @@
-@model  int?
-@{
-    string name = ViewData.TemplateInfo.GetFullHtmlFieldId("");
-    var Unit = ViewData.ModelMetadata.AdditionalValues["IntegerExtensionUnit"];
-}
-
-<div class="display-integerextension">
-    @Model <span>@Unit</span>
-</div>

@@ -27,8 +27,9 @@ namespace SanXing.Web
                            "~/Scripts/bootstrap-select.js",
                            "~/Scripts/bootstrap-modalmanager.js",
                            "~/Scripts/bootstrap-modal.js",
-                           "~/Scripts/moment.js",
-                           "~/Scripts/bootstrap-datetimepicker.js"));
+                           "~/Scripts/bootstrap-datepicker.js",
+                           "~/Scripts/bootstrap-datepicker.zh-CN.js",
+                           "~/Scripts/bootstrap-spinner.js"));
 
             // 使用要用于开发和学习的 Modernizr 的开发版本。然后，当你做好
             // 生产准备时，请使用 http://modernizr.com 上的生成工具来仅选择所需的测试。
@@ -42,7 +43,7 @@ namespace SanXing.Web
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/site.css"
-                        ,"~/Content/animate.css"));
+                        , "~/Content/animate.css"));
 
             bundles.Add(new StyleBundle("~/Content/login")
                         .Include("~/Content/site.css",
@@ -54,8 +55,9 @@ namespace SanXing.Web
                       "~/Content/bootstrap/bootstrap-select.css",
                       "~/Content/bootstrap/bootstrap-modal-bs3patch.css",
                       "~/Content/bootstrap/bootstrap-modal.css",
-                       "~/Content/bootstrap/bootstrap-datetimepicker.css"));
-           
+                      "~/Content/bootstrap/bootstrap-datepicker3.css",
+                      "~/Content/bootstrap/bootstrap-spinner.css"));
+
 
             bundles.Add(new StyleBundle("~/Content/kendo/2012.3.1114/css")
               .Include(

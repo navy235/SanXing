@@ -1,3 +1,19 @@
 @model  int?
-
-@Html.TextBoxFor(m => m, new { type = "number", @class = "form-control" })
+@{
+    var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
+}
+<div class="input-group input-append spinner" id='@(name)_spinner' data-trigger="spinner">
+    @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new Dictionary<string, object>() { { "class", "form-control" }, { "data-rule", "quantity" } })
+    <span class="input-group-addon spin-up " data-spin="up"><span class="glyphicon glyphicon-chevron-up"></span></span>
+    <span class="input-group-addon pin-down" data-spin="down"><span class="glyphicon glyphicon-chevron-down"></span></span>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#@(name)_spinner').spinner('changed', function (e) {
+            var parentform = $('#@(name)').parents('form:first');
+            if (parentform[0] && parentform.validate()) {
+                parentform.validate().element('#@(name)');
+            }
+        })
+    });
+</script>

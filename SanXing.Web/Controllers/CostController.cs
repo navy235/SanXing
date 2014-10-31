@@ -61,19 +61,99 @@ namespace SanXing.Web.Controllers
 
         public ActionResult Create(string date = null)
         {
-            var createTime = DateTime.Now;
+            var costDate = DateTime.Now;
             if (!string.IsNullOrEmpty(date))
             {
-                createTime = Convert.ToDateTime(date);
+                costDate = Convert.ToDateTime(date);
             }
-            var model = new CostModel();
-            ViewBag.Data_CostTypeID = Utilities.GetSelectListData(
-                CostTypeService.GetAll()
-                .Where(x => x.PID.Equals(null) && !x.Deleted)
-                .OrderBy(x => x.Code)
-                .ToList(), x => x.ID, x => x.CateName, true);
+            var model = new CostModel()
+            {
+                CostDate = costDate
+            };
+
+            ViewBag.Data_CostTypeID = GetGroupSelect();
 
             return PartialView(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(CostModel model)
+        {
+            ServiceResult result = new ServiceResult();
+            if (!ModelState.IsValid)
+            {
+                result.AddModelStateError(ModelState);
+            }
+            else
+            {
+                try
+                {
+                    var entity = model.ToEntity();
+                    entity.CreateTime = DateTime.Now;
+                    entity.LastTime = DateTime.Now;
+                    entity.UserID = CookieHelper.UID;
+                    CostService.Insert(entity);
+                    entity.CostType = CostTypeService.Single(entity.CostTypeID);
+                    var CostItem = new CostListItemModel()
+                    {
+                        CostDate = entity.CostDate,
+                        CostTypeID = entity.CostTypeID,
+                        CostTypeName = entity.CostType.CateName,
+                        CreateTime = entity.CreateTime,
+                        Deleted = entity.Deleted,
+                        Description = entity.Description,
+                        ID = entity.ID,
+                        LastTime = entity.LastTime,
+                        Money = entity.Money,
+                        UserID = entity.UserID
+                    };
+                    result.SuccessData = entity.CostDate.ToString("yyyy-MM-dd");
+                    result.SuccessHtml = RenderPartialViewToString("costitem", CostItem);
+                    result.Message = "添加费用记录成功！";
+                }
+                catch (Exception ex)
+                {
+                    result.AddServiceError(Utilities.GetInnerMostException(ex));
+                    LogHelper.WriteLog("用户:" + CookieHelper.UID + "添加费用记录失败!", ex);
+                }
+            }
+            return Json(result);
+        }
+
+        private GroupSelect GetGroupSelect()
+        {
+            var select = new GroupSelect();
+            var source = CostTypeService.GetAll()
+                .Where(x => x.PID.Equals(null) && !x.Deleted).ToList();
+
+            foreach (var cate in source)
+            {
+                if (CostTypeService.GetAll()
+                    .Where(x => x.PID == cate.ID).Any())
+                {
+                    var group = new GroupSelectOptgroup();
+                    group.Label = cate.CateName;
+                    var childs = CostTypeService.GetAll()
+                    .Where(x => x.PID == cate.ID).ToList();
+                    foreach (var child in childs)
+                    {
+                        var item = new GroupSelectItem();
+                        item.Text = child.CateName;
+                        item.Value = child.ID.ToString();
+                        group.Items.Add(item);
+                    }
+                    select.Groups.Add(group);
+                }
+                else
+                {
+                    var item = new GroupSelectItem();
+                    item.Text = cate.CateName;
+                    item.Value = cate.ID.ToString();
+                    select.Items.Add(item);
+                }
+            }
+            return select;
         }
     }
 }

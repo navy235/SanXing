@@ -13,7 +13,7 @@ namespace SanXing.Data.Mapping
 
             this.Property(x => x.Money).IsRequired();
 
-            this.Property(x => x.Description).IsRequired();
+            this.Property(x => x.Description);
 
             this.HasRequired(a => a.User).WithMany(x => x.Cost)
 

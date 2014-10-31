@@ -46,7 +46,7 @@ namespace SanXing.Web.Framework.Mvc
         [DisplayFormat(NullDisplayText = "")]
         public string Message { get; set; }
 
-        protected List<ServiceError> serviceErrors = new List<ServiceError>();
+        public List<ServiceError> serviceErrors = new List<ServiceError>();
 
         public void AddServiceError(string property, string errorMessage)
         {
@@ -61,6 +61,17 @@ namespace SanXing.Web.Framework.Mvc
         public List<ServiceError> GetServiceErrors()
         {
             return serviceErrors;
+        }
+
+        public void AddModelStateError(ModelStateDictionary ModelState)
+        {
+            foreach (ModelState modelState in ModelState.Values)
+            {
+                foreach (ModelError error in modelState.Errors)
+                {
+                    serviceErrors.Add(new ServiceError(error.ErrorMessage));
+                }
+            }
         }
     }
 }

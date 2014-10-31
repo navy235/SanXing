@@ -1,0 +1,10 @@
+@model  int?
+
+@{
+    var name = ViewData.TemplateInfo.GetFullHtmlFieldName("");
+    var selectList = (GroupSelect)ViewData["Data_" + name];
+}
+@Html.GroupDropdownListFor(m => m, selectList, new { @class = "form-control selectpicker" })
+
+
+

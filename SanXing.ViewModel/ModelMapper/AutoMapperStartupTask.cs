@@ -26,7 +26,10 @@ namespace SanXing.ViewModels
             Mapper.CreateMap<ContactTypeModel, ContactType>();
 
             Mapper.CreateMap<Cost, CostModel>();
+               
+
             Mapper.CreateMap<CostModel, Cost>();
+
 
             Mapper.CreateMap<Plan, PlanModel>();
             Mapper.CreateMap<PlanModel, Plan>();

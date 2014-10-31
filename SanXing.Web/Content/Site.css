@@ -110,3 +110,20 @@ span.field-validation-error {
     left: 50%;
     margin-left: -125px;
 }
+
+.task-container {
+    min-height: 70px;
+}
+
+.task-td {
+    cursor: pointer;
+}
+
+    .task-td :hover {
+        background: #eeeeee;
+    }
+
+
+.task-td-today {
+    background:#ffdb99;
+}

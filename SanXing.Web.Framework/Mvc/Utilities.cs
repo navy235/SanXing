@@ -112,6 +112,8 @@ namespace SanXing.Web.Framework.Mvc
 
         #endregion
 
+
+
         public static int GetMonthDayCount(int year, int month)
         {
             var list = new Dictionary<int, int>();

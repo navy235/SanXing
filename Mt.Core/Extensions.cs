@@ -19,5 +19,16 @@ namespace Mt.Core
             var list = Value.Split(',').Select(x => Convert.ToInt32(x)).ToList();
             return list;
         }
+
+        public static List<string> ToStrList(this string Value)
+        {
+            if (string.IsNullOrEmpty(Value))
+            {
+                return new List<string>();
+            }
+            var list = Value.Split(',').Select(x => x).ToList();
+            return list;
+        }
+     
     }
 }

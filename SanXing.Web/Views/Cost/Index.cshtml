@@ -79,7 +79,7 @@
     </table>
 </div>
 
-<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: -161px;" aria-hidden="true">
+<div id="ajax-modal" class="modal fade" tabindex="-1" style="display: none; margin-top: -161px;" aria-hidden="true" data-backdrop="static">
     
 </div>
 
@@ -94,10 +94,24 @@
                 var data = { date: target.data('date') };
                 $.get(url, data, function (res) {
                     $('#ajax-modal').html(res);
+                    $('#ajax-modal').find('.selectpicker').selectpicker();
                     $('#ajax-modal').modal();
+                    $.validator.unobtrusive.parse(document);
                 })
             }
         })
+
+        function ajaxFormSuccess(res) {
+            Mt.JHelper.showMessage(res);
+            if (res.Success) {
+                $('#ajax-modal').modal('hide');
+                var item = res.SuccessData;
+                $('.task-td[data-date="' + item + '"]')
+                    .find('.task-container')
+                    .append(res.SuccessHtml);
+
+            }
+        }
 
     </script>
 }

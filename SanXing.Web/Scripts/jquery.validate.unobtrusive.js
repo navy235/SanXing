@@ -50,12 +50,12 @@
     formgroup.addClass('has-error').removeClass('has-success');
    
     error.data("unobtrusiveContainer", container);
-    var spanicon = formgroup.find('.form-control-feedback');
-    if (spanicon[0]) {
-      spanicon.removeClass('glyphicon-ok').addClass('glyphicon-remove');
-    } else {
-      formgroup.append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
-    }
+    //var spanicon = formgroup.find('.form-control-feedback');
+    //if (spanicon[0]) {
+    //  spanicon.removeClass('glyphicon-ok').addClass('glyphicon-remove');
+    //} else {
+    //  formgroup.append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
+    //}
     if (replace) {
       container.empty();
       error.removeClass("input-validation-error").appendTo(container);
@@ -87,12 +87,12 @@
     if (container) {
       container.addClass("field-validation-valid").removeClass("field-validation-error");
       formgroup.removeClass('has-error').addClass('has-success');
-      var spanicon = formgroup.find('.form-control-feedback');
-      if (spanicon[0]) {
-        spanicon.removeClass('glyphicon-remove').addClass('glyphicon-ok');
-      } else {
-        formgroup.append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
-      }
+      //var spanicon = formgroup.find('.form-control-feedback');
+      //if (spanicon[0]) {
+      //  spanicon.removeClass('glyphicon-remove').addClass('glyphicon-ok');
+      //} else {
+      //  formgroup.append('<span class="glyphicon glyphicon-remove form-control-feedback"></span>');
+      //}
       error.removeData("unobtrusiveContainer");
 
       if (replace) {
@@ -116,7 +116,7 @@
         .find(">*")  // If we were using valmsg-replace, get the underlying error
             .removeData("unobtrusiveContainer");
 
-    $form.find('.form-control-feedback').remove();
+    //$form.find('.form-control-feedback').remove();
   }
 
   function validationInfo(form) {

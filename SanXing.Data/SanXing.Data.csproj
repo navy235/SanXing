@@ -93,6 +93,10 @@
     <Compile Include="Migrations\201410300857566_AlterTableCost.Designer.cs">
       <DependentUpon>201410300857566_AlterTableCost.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201410310835154_AlterCostDescriptionNotRequire.cs" />
+    <Compile Include="Migrations\201410310835154_AlterCostDescriptionNotRequire.Designer.cs">
+      <DependentUpon>201410310835154_AlterCostDescriptionNotRequire.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ContactRecord.cs" />
     <Compile Include="Models\ContactType.cs" />
@@ -135,6 +139,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201410300857566_AlterTableCost.resx">
       <DependentUpon>201410300857566_AlterTableCost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201410310835154_AlterCostDescriptionNotRequire.resx">
+      <DependentUpon>201410310835154_AlterCostDescriptionNotRequire.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

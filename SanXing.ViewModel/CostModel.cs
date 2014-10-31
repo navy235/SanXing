@@ -20,6 +20,11 @@ namespace SanXing.ViewModels
     [Validator(typeof(CostValidator))]
     public class CostModel : BaseMtEntityModel
     {
+        public CostModel()
+        {
+            this.CostDate = DateTime.Now;
+        }
+
         [HiddenInput(DisplayValue = false)]
         public override int ID { get; set; }
 
@@ -28,10 +33,11 @@ namespace SanXing.ViewModels
         public DateTime CostDate { get; set; }
 
         [Display(Name = "费用类别")]
-        [UIHint("DropDownList")]
+        [UIHint("GroupDropDownList")]
         public int CostTypeID { get; set; }
 
         [Display(Name = "金额")]
+        [UIHint("Integer")]
         public int Money { get; set; }
 
         [Display(Name = "描述")]
